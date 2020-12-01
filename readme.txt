@@ -1,8 +1,3 @@
-Git i free software
-hello word
+hello world
 one
 two
-three
-four 
-five
-six
