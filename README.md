@@ -283,3 +283,33 @@ $ git push -u origin master  #把本地库的内容推送到远程，用git push
 
 ### 从远程库克隆（ git clone ）
 git clone    -b {{develop}}   {ssh地址}
+
+### 创建与合并分支
+```
+$ git checkout -b dev              #创建dev分支，然后切换到dev分支：
+Switched to a new branch 'dev'
+```
+git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：
+```
+$ git branch dev
+$ git checkout dev
+Switched to branch 'dev'
+```
+然后，用git branch命令查看当前分支
+```
+$ git branch
+* dev
+  master
+  
+$ git add readme.txt 
+$ git commit -m "branch test"
+$ git checkout master                 #dev分支的工作完成，我们就可以切换回master分支
+
+$ git merge dev                         #把dev分支的工作成果合并到master分支上
+Updating d46f35e..b17d20e
+Fast-forward
+ readme.txt | 1 +
+ 1 file changed, 1 insertion(+)         
+ 
+ $ git branch -d dev                 #删除dev分支
+```
