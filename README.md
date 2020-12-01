@@ -281,4 +281,5 @@ $ git push -u origin master  #把本地库的内容推送到远程，用git push
 我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
 `$ git push origin master`
 
-### 从远程库克隆 git clone
+### 从远程库克隆（ git clone ）
+git clone    -b {{develop}}   {ssh地址}
