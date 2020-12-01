@@ -269,3 +269,16 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 为什么GitHub需要SSH Key呢？因为GitHub需要识别出你推送的提交确实是你推送的，而不是别人冒充的，而Git支持SSH协议，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。当然，GitHub允许你添加多个Key。假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了。  
 最后友情提示，在GitHub上免费托管的Git仓库，任何人都可以看到喔（但只有你自己才能改）。所以，不要把敏感信息放进去。
+
+### 添加远程库 和 git push
+```
+$ git remote add origin git@github.com:michaelliao/learngit.git
+#origin 是你为远端仓库所起的名字，一般都是叫origin，其实你也可以要Ceres 或者Earth
+# git@github.com:michaelliao/learngit.git  是你的远端仓库的真实地址          
+
+$ git push -u origin master  #把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+```
+我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+`$ git push origin master`
+
+### 从远程库克隆 git clone
