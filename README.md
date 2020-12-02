@@ -191,16 +191,16 @@ ddd7388 (HEAD -> master) HEAD@{2}: commit: six
 07b4f9f HEAD@{4}: commit (initial): first update
 ```
 ### 工作区和暂存区
-![工作区和暂存区](http://gitlab.nbpitech.com/tangxd/photo/raw/master/0.jpg)
->http://gitlab.nbpitech.com/tangxd/photo/raw/master/0.jpg
-是分两步执行的： 
-第一步是用git add把文件添加进去，实际上就是把文件修改添加到暂存区(stage)。
-第二步是用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支。 
+![工作区和暂存区](http://gitlab.nbpitech.com/tangxd/photo/raw/master/0.jpg)  
+>http://gitlab.nbpitech.com/tangxd/photo/raw/master/0.jpg  
+是分两步执行的：   
+第一步是用git add把文件添加进去，实际上就是把文件修改添加到暂存区(stage)。  
+第二步是用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支。   
 
 ### 管理修改
 Git跟踪并管理的是修改，而非文件。  
-第一次修改 -> git add -> 第二次修改 -> git commit
-Git管理的是修改，当你用git add命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，git commit只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。
+第一次修改 -> git add -> 第二次修改 -> git commit  
+Git管理的是修改，当你用git add命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，git commit只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。  
 
 ### git checkout -- file
 可以丢弃工作区的修改
@@ -209,19 +209,19 @@ $ git checkout -- readme.txt     //命令中的--很重要，没有--，就变�
 ```
 一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态； 
 
-一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。 
-总之，就是让这个文件回到最近一次git commit或git add时的状态。
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。  
+总之，就是让这个文件回到最近一次git commit或git add时的状态。 
 
 ### git reset HEAD <file>
-可以把暂存区的修改撤销掉（unstage），重新放回工作区。 
+可以把暂存区的修改撤销掉（unstage），重新放回工作区。  
 ```
 $ git reset HEAD readme.txt
 Unstaged changes after reset:
 M	readme.txt
 ```
-git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。  
-再用git status查看一下，现在暂存区是干净的，工作区有修改。   
-假设你不但改错了东西，还从暂存区提交到了版本库，怎么办呢？还记得版本回退一节吗？可以回退到上一个版本。不过，这是有条件的，就是你还没有把自己的本地版本库推送到远程。还记得Git是分布式版本控制系统吗？我们后面会讲到远程版本库，一旦你把stupid boss提交推送到远程版本库，你就真的惨了……  
+git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。   
+再用git status查看一下，现在暂存区是干净的，工作区有修改。    
+假设你不但改错了东西，还从暂存区提交到了版本库，怎么办呢？还记得版本回退一节吗？可以回退到上一个版本。不过，这是有条件的，就是你还没有把自己的本地版本库推送到远程。还记得Git是分布式版本控制系统吗？我们后面会讲到远程版本库，一旦你把stupid boss提交推送到远程版本库，你就真的惨了……   
 
 ### 删除文件 （git rm file）
 ```
@@ -313,3 +313,4 @@ Fast-forward
  
  $ git branch -d dev                 #删除dev分支
 ```
+**切换分支：`git checkout <name>或者git switch <name>`**
