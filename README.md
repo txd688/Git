@@ -1,7 +1,7 @@
 # 一些常用的Git命令
 分布式版本控制系统
-[下载安装程序](https://git-scm.com/downloads)
-
+[下载安装程序](https://git-scm.com/downloads)  
+[123](#user-content-git-commit)
 ### 配置名字和邮箱
 ```
 $ git config --global user.name "Your Name"
