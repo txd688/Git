@@ -13,7 +13,9 @@
 [git checkout -- file](#git-checkout----file)：撤销修改  
 [git rm](#删除文件)：从版本库中删除文件   
 [git remote add](#添加远程库和git-push)：关联一个远程库  
-[git clone](#从远程库克隆)：克隆一个本地仓库
+[git clone](#从远程库克隆)：克隆一个本地仓库  
+[git switch](#创建与合并分支)：切换分支或创建分支  
+
 
 ### 配置名字和邮箱
 ```
@@ -299,7 +301,7 @@ git clone    -b {{develop}}   {ssh地址}
 
 ### 创建与合并分支
 ```
-$ git checkout -b dev              #创建dev分支，然后切换到dev分支：
+$ git checkout -b dev              #创建dev分支，然后切换到dev分支： 或者 git switch <name>
 Switched to a new branch 'dev'
 ```
 git checkout命令加上-b参数表示创建并切换，相当于以下两条命令：
@@ -327,3 +329,34 @@ Fast-forward
  $ git branch -d dev                 #删除dev分支
 ```
 **切换分支：`git checkout <name>或者git switch <name>`**
+
+### 解决冲突
+两个分支修改同一个文件
+```
+# 创建一个新分支修改文件，并提交
+$ git switch -c feature1
+Switched to a new branch 'feature1'
+
+$ git add readme.txt
+
+$ git commit -m "AND simple"
+[feature1 14096d0] AND simple
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ 
+ # 切换到master分支，修改文件并提交
+$ git switch master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+  
+$ git add readme.txt 
+$ git commit -m "& simple"
+[master 5dc6824] & simple
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+#合并发生冲突
+$ git merge feature1
+Auto-merging readme.txt
+CONFLICT (content): Merge conflict in readme.txt
+Automatic merge failed; fix conflicts and then commit the result.
+```
