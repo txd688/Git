@@ -1,7 +1,20 @@
 # 一些常用的Git命令
 分布式版本控制系统
 [下载安装程序](https://git-scm.com/downloads)  
-[git init](#git-init):把这个目录变成Git可以管理的仓库
+
+[git init](#git-init)：把这个目录变成Git可以管理的仓库  
+[git add](#git-add)：添加文件到仓库  
+[git commit -m '备注'](#git-commit)：提交文件到仓库  
+[git status](#git-status)：查看仓库状态
+[git diff](#git-diff)：查看修改修改内容
+[git log](#git-log)：显示从最近到最远的提交日志(git log --pretty=oneline 一行一行显示)  
+[git reset](#git-reset)：撤回，前进或者说是重置 HEAD 指向  
+[git reflog](#git-reflog)：查看看命令历史  
+[git checkout -- file](#git-checkout----file)：撤销修改  
+[git rm](#删除文件)：从版本库中删除文件   
+[git remote add](#添加远程库和git-push)：关联一个远程库  
+[git clone](#从远程库克隆)：克隆一个本地仓库
+
 ### 配置名字和邮箱
 ```
 $ git config --global user.name "Your Name"
@@ -223,7 +236,7 @@ git reset命令既可以回退版本，也可以把暂存区的修改回退到�
 再用git status查看一下，现在暂存区是干净的，工作区有修改。    
 假设你不但改错了东西，还从暂存区提交到了版本库，怎么办呢？还记得版本回退一节吗？可以回退到上一个版本。不过，这是有条件的，就是你还没有把自己的本地版本库推送到远程。还记得Git是分布式版本控制系统吗？我们后面会讲到远程版本库，一旦你把stupid boss提交推送到远程版本库，你就真的惨了……   
 
-### 删除文件 （git rm file）
+### 删除文件
 ```
 $ git add test.txt
 
@@ -270,7 +283,7 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 为什么GitHub需要SSH Key呢？因为GitHub需要识别出你推送的提交确实是你推送的，而不是别人冒充的，而Git支持SSH协议，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。当然，GitHub允许你添加多个Key。假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了。  
 最后友情提示，在GitHub上免费托管的Git仓库，任何人都可以看到喔（但只有你自己才能改）。所以，不要把敏感信息放进去。
 
-### 添加远程库 和 git push
+### 添加远程库和git push
 ```
 $ git remote add origin git@github.com:michaelliao/learngit.git
 #origin 是你为远端仓库所起的名字，一般都是叫origin，其实你也可以要Ceres 或者Earth
@@ -281,7 +294,7 @@ $ git push -u origin master  #把本地库的内容推送到远程，用git push
 我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
 `$ git push origin master`
 
-### 从远程库克隆（ git clone ）
+### 从远程库克隆
 git clone    -b {{develop}}   {ssh地址}
 
 ### 创建与合并分支
