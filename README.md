@@ -7,16 +7,24 @@
 [git commit -m '备注'](#git-commit)：提交文件到仓库  
 [git status](#git-status)：查看仓库状态
 [git diff](#git-diff)：查看修改修改内容
-[git log](#git-log)：显示从最近到最远的提交日志(git log --pretty=oneline 一行一行显示)  
+[git log](#git-log)：显示从最近到最远的提交日志(git log --pretty=oneline 一行一行显示)（git log --graph --pretty=oneline --abbrev-commit：查看分支的合并情况）  
 [git reset](#git-reset)：撤回，前进或者说是重置 HEAD 指向  
 [git reflog](#git-reflog)：查看看命令历史  
 [git checkout -- file](#git-checkout----file)：撤销修改  
 [git rm](#删除文件)：从版本库中删除文件   
 [git remote add](#添加远程库和git-push)：关联一个远程库  
 [git clone](#从远程库克隆)：克隆一个本地仓库  
-[git switch](#创建与合并分支)：切换分支或创建分支  
-
-
+[git switch -c \<name>](#创建与合并分支)：创建+切换分支或者git checkout -b <name> 
+[git branch <name>](#创建与合并分支)：创建分支
+[git switch <name>](#创建与合并分支)：切换分支或者 git checkout <name>
+[git merge <name>](#创建与合并分支)：合并分支  
+[git branch -d <name>](#创建与合并分支)：删除分支  
+[git stash](#bug分支)：“储藏”工作现场，开辟干净工作区  
+[git stash list](#bug分支)：查看stash列表  
+[git stash pop](#bug分支)：恢复的同时把stash内容也删了（另一种是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；）  
+[git cherry-pick <commit>](#bug分支)：把bug提交的修改“复制”到当前分支，避免重复劳动。 
+[git branch -D <name>](#Feature分支)：强行删除没有被合并的分支
+	
 ### 配置名字和邮箱
 ```
 $ git config --global user.name "Your Name"
@@ -327,6 +335,7 @@ Fast-forward
  1 file changed, 1 insertion(+)         
  
  $ git branch -d dev                 #删除dev分支
+ Deleted branch dev (was 6e6626d).
 ```
 **切换分支：`git checkout <name>或者git switch <name>`**
 
@@ -359,4 +368,86 @@ $ git merge feature1
 Auto-merging readme.txt
 CONFLICT (content): Merge conflict in readme.txt
 Automatic merge failed; fix conflicts and then commit the result.
+
+#需要人工手动修改问题，在add和commit
+
+$ git log --graph --pretty=oneline --abbrev-commit     #看到分支的合并情况：
+*   cf810e4 (HEAD -> master) conflict fixed
+|\  
+| * 14096d0 (feature1) AND simple
+* | 5dc6824 & simple
+|/  
+* b17d20e branch test
+* d46f35e (origin/master) remove test.txt
+* b84166e add test.txt
+* 519219b git tracks changes
+* e43a48b understand how stage works
+* 1094adb append GPL
+* e475afc add distributed
+* eaadf4e wrote a readme file
+```
+### 分支管理策略
+通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
+如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
+
+准备合并dev分支，请注意--no-ff参数，表示禁用Fast forward：
+```
+$ git merge --no-ff -m "merge with no-ff" dev
+Merge made by the 'recursive' strategy.
+ readme.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ 
+ $ git log --graph --pretty=oneline --abbrev-commit
+*   e1e9c68 (HEAD -> master) merge with no-ff
+|\  
+| * f52c633 (dev) add merge
+|/  
+*   cf810e4 conflict fixed
+```
+
+### Bug分支
+//将保留一个现场
+git stash
+
+--------------
+  完成另外一个任务
+--------------
+
+//列出现场
+git stash list
+
+//恢复现场
+git stash apply <stash@{id}> //恢复现场，现场列表依旧存在该现场,如果没有stash@{id}则删除栈顶
+git stash pop    //弹出现场，栈顶现场删除了
+
+//删除现场
+git stash drop <stash@{id}>
+
+----------------------------------------------------
+
+//在bug分支在自己分支部分合并
+ git cherry-pick <branch id>    
+
+### Feature分支
+开发一个新feature，最好新建一个分支；
+
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+	
+### 多人协作
+要查看远程库的信息，用git remote：
+```
+$ git remote
+origin
+
+git remote -v
+origin  git@github.com:txd688/Git.git (fetch)
+origin  git@github.com:txd688/Git.git (push)
+```
+推送分支
+```
+$ git push origin master
+```
+如果要推送其他分支，比如dev，就改成：
+```
+$ git push origin dev
 ```
