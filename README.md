@@ -419,17 +419,18 @@ Merge made by the 'recursive' strategy.
 ```
 
 ### Bug分支
-//将保留一个现场
-git stash
-
---------------
-  完成另外一个任务
---------------
-
-//列出现场
-git stash list
-
-//恢复现场
+```
+//将保留一个现场  
+git stash  
+  
+--------------  
+  完成另外一个任务  
+--------------   
+  
+//列出现场  
+git stash list  
+  
+//恢复现场  
 git stash apply <stash@{id}> //恢复现场，现场列表依旧存在该现场,如果没有stash@{id}则删除栈顶
 git stash pop    //弹出现场，栈顶现场删除了
 
@@ -440,7 +441,7 @@ git stash drop <stash@{id}>
 
 //在bug分支在自己分支部分合并
  git cherry-pick <branch id>    
-
+```
 ### Feature分支
 开发一个新feature，最好新建一个分支；
 
