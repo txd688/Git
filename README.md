@@ -5,25 +5,38 @@
 [git init](#git-init)：把这个目录变成Git可以管理的仓库  
 [git add](#git-add)：添加文件到仓库  
 [git commit -m '备注'](#git-commit)：提交文件到仓库  
-[git status](#git-status)：查看仓库状态
-[git diff](#git-diff)：查看修改修改内容
+[git status](#git-status)：查看仓库状态  
+[git diff](#git-diff)：查看修改修改内容  
 [git log](#git-log)：显示从最近到最远的提交日志(git log --pretty=oneline 一行一行显示)（git log --graph --pretty=oneline --abbrev-commit：查看分支的合并情况）  
 [git reset](#git-reset)：撤回，前进或者说是重置 HEAD 指向  
 [git reflog](#git-reflog)：查看看命令历史  
 [git checkout -- file](#git-checkout----file)：撤销修改  
 [git rm](#删除文件)：从版本库中删除文件   
 [git remote add](#添加远程库和git-push)：关联一个远程库  
-[git clone](#从远程库克隆)：克隆一个本地仓库  
-[git switch -c \<name>](#创建与合并分支)：创建+切换分支或者git checkout -b <name> 
-[git branch <name>](#创建与合并分支)：创建分支
-[git switch <name>](#创建与合并分支)：切换分支或者 git checkout <name>
-[git merge <name>](#创建与合并分支)：合并分支  
-[git branch -d <name>](#创建与合并分支)：删除分支  
-[git stash](#bug分支)：“储藏”工作现场，开辟干净工作区  
+[git clone](#从远程库克隆)：克隆一个本地仓库   
+[git switch -c \<name>](#创建与合并分支)：创建+切换分支或者git checkout -b <name>   
+[git branch <name>](#创建与合并分支)：创建分支  
+[git switch <name>](#创建与合并分支)：切换分支或者 git checkout <name>  
+[git merge <name>](#创建与合并分支)：合并分支    
+[git branch -d <name>](#创建与合并分支)：删除分支   
+[git stash](#bug分支)：“储藏”工作现场，开辟干净工作区   
 [git stash list](#bug分支)：查看stash列表  
 [git stash pop](#bug分支)：恢复的同时把stash内容也删了（另一种是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；）  
 [git cherry-pick <commit>](#bug分支)：把bug提交的修改“复制”到当前分支，避免重复劳动。 
-[git branch -D <name>](#Feature分支)：强行删除没有被合并的分支
+[git branch -D <name>](#Feature分支)：强行删除没有被合并的分支  
+[git remote -v](#多人协作)：查看远程库信息  
+[git push origin branch-name](#多人协作)：从本地推送分支  
+[git checkout -b branch-name origin/branch-name](#多人协作)：在本地创建和远程分支对应的分支  
+[git pull](#多人协作)：从远程抓取分支，如果有冲突，要先处理冲突。  
+[git branch --set-upstream branch-name origin/branch-name](#多人协作)：建立本地分支和远程分支的关联   
+[git rebase]：可以把本地未push的分叉提交历史整理成直线，目的是使得我们在查看历史提交的变化时更容易  
+[git tag <tagname>](#创建标签)：用于新建一个标签，默认为HEAD，也可以指定一个commit id	
+[git tag -a <tagname> -m "blablabla..."](#创建标签)：可以指定标签信息； 
+[git tag](#创建标签)：可以查看所有标签	
+[git show <tagname>](#创建标签)：查看标签信息  
+[git push origin <tagname>](#操作标签)：可以推送一个本地标签(git push origin --tags 可以推送全部未推送过的本地标签)	
+[git tag -d <tagname>](#操作标签)：可以删除一个本地标签  	
+[git push origin :refs/tags/<tagname>](#操作标签)：可以删除一个远程标签。  
 	
 ### 配置名字和邮箱
 ```
@@ -450,4 +463,272 @@ $ git push origin master
 如果要推送其他分支，比如dev，就改成：
 ```
 $ git push origin dev
+```
+抓取分支
+```
+git clone git@github.com:txd688/Git.git
+```
+默认情况下，你的小伙伴只能看到本地的master分支和创建远程origin的dev分支到本地，
+```
+$ git branch
+* master
+
+$ git checkout -b dev origin/dev
+```
+
+有时候报这个错误，是没有指定本地dev分支与远程origin/dev分支的链接，根据提示，设置dev和origin/dev的链接
+```
+$ git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> dev
+    
+$ git branch --set-upstream-to=origin/dev dev
+```
+
+多人协作
+阅读: 96639745
+当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。
+
+要查看远程库的信息，用git remote：
+
+$ git remote
+origin
+或者，用git remote -v显示更详细的信息：
+
+$ git remote -v
+origin  git@github.com:michaelliao/learngit.git (fetch)
+origin  git@github.com:michaelliao/learngit.git (push)
+上面显示了可以抓取和推送的origin的地址。如果没有推送权限，就看不到push的地址。
+
+推送分支
+推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
+
+$ git push origin master
+如果要推送其他分支，比如dev，就改成：
+
+$ git push origin dev
+但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？
+
+master分支是主分支，因此要时刻与远程同步；
+
+dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+
+bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+
+feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+
+总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！
+
+
+
+抓取分支
+多人协作时，大家都会往master和dev分支上推送各自的修改。
+
+现在，模拟一个你的小伙伴，可以在另一台电脑（注意要把SSH Key添加到GitHub）或者同一台电脑的另一个目录下克隆：
+
+$ git clone git@github.com:michaelliao/learngit.git
+Cloning into 'learngit'...
+remote: Counting objects: 40, done.
+remote: Compressing objects: 100% (21/21), done.
+remote: Total 40 (delta 14), reused 40 (delta 14), pack-reused 0
+Receiving objects: 100% (40/40), done.
+Resolving deltas: 100% (14/14), done.
+当你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的master分支。不信可以用git branch命令看看：
+
+$ git branch
+* master
+现在，你的小伙伴要在dev分支上开发，就必须创建远程origin的dev分支到本地，于是他用这个命令创建本地dev分支：
+
+$ git checkout -b dev origin/dev
+现在，他就可以在dev上继续修改，然后，时不时地把dev分支push到远程：
+
+$ git add env.txt
+
+$ git commit -m "add env"
+[dev 7a5e5dd] add env
+ 1 file changed, 1 insertion(+)
+ create mode 100644 env.txt
+
+$ git push origin dev
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 308 bytes | 308.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To github.com:michaelliao/learngit.git
+   f52c633..7a5e5dd  dev -> dev
+
+
+你的小伙伴已经向origin/dev分支推送了他的提交，而碰巧你也对同样的文件作了修改，并试图推送：
+
+$ cat env.txt
+env
+
+$ git add env.txt
+
+$ git commit -m "add new env"
+[dev 7bd91f1] add new env
+ 1 file changed, 1 insertion(+)
+ create mode 100644 env.txt
+
+$ git push origin dev
+To github.com:michaelliao/learngit.git
+ ! [rejected]        dev -> dev (non-fast-forward)
+error: failed to push some refs to 'git@github.com:michaelliao/learngit.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突，解决办法也很简单，Git已经提示我们，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送：
+
+$ git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> dev
+git pull也失败了，原因是没有指定本地dev分支与远程origin/dev分支的链接，根据提示，设置dev和origin/dev的链接：
+
+$ git branch --set-upstream-to=origin/dev dev
+Branch 'dev' set up to track remote branch 'dev' from 'origin'.
+再pull：
+
+$ git pull
+Auto-merging env.txt
+CONFLICT (add/add): Merge conflict in env.txt
+Automatic merge failed; fix conflicts and then commit the result.
+这回git pull成功，但是合并有冲突，需要手动解决，解决的方法和分支管理中的解决冲突完全一样。解决后，提交，再push：
+
+$ git commit -m "fix env conflict"
+[dev 57c53ab] fix env conflict
+
+$ git push origin dev
+Counting objects: 6, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (6/6), 621 bytes | 621.00 KiB/s, done.
+Total 6 (delta 0), reused 0 (delta 0)
+To github.com:michaelliao/learngit.git
+   7a5e5dd..57c53ab  dev -> dev
+
+
+因此，多人协作的工作模式通常是这样：
+
+首先，可以试图用git push origin <branch-name>推送自己的修改；
+
+如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+
+如果合并有冲突，则解决冲突，并在本地提交；
+
+没有冲突或者解决掉冲突后，再用git push origin <branch-name>推送就能成功！
+
+如果git pull提示no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream-to <branch-name> origin/<branch-name>。 
+
+这就是多人协作的工作模式，一旦熟悉了，就非常简单。 
+
+### 创建标签
+发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。
+
+Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和删除标签都是瞬间完成的。
+
+Git有commit，为什么还要引入tag？
+
+“请把上周一的那个版本打包发布，commit号是6a5819e...”
+
+“一串乱七八糟的数字不好找！”
+
+如果换一个办法：
+
+“请把上周一的那个版本打包发布，版本号是v1.2”
+
+“好的，按照tag v1.2查找commit就行！”
+
+所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
+```
+
+$ git branch
+* dev
+  master
+$ git checkout master
+Switched to branch 'master'
+
+#创建一个标签
+$ git tag v1.0
+
+#查看所有标签：
+git tag
+
+#如果忘了打标签，找到历史commit id，再打上
+$ git log --pretty=oneline --abbrev-commit
+12a631b (HEAD -> master, tag: v1.0, origin/master) merged bug fix 101
+4c805e2 fix bug 101
+e1e9c68 merge with no-ff
+f52c633 add merge
+cf810e4 conflict fixed
+5dc6824 & simple
+14096d0 AND simple
+b17d20e branch test
+d46f35e remove test.txt
+b84166e add test.txt
+519219b git tracks changes
+e43a48b understand how stage works
+1094adb append GPL
+e475afc add distributed
+eaadf4e wrote a readme file
+
+$ git tag v0.9 f52c633
+
+#git show <tagname> 查看标签信息
+$ git show v0.9
+commit f52c63349bc3c1593499807e5c8e972b82c8f286 (tag: v0.9)
+Author: Michael Liao <askxuefeng@gmail.com>
+Date:   Fri May 18 21:56:54 2018 +0800
+
+    add merge
+
+diff --git a/readme.txt b/readme.txt
+
+#还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：
+$ git tag -a v0.1 -m "version 0.1 released" 1094adb
+```
+
+### 操作标签
+删除标签
+```
+$ git tag -d v0.1
+```
+
+因为创建的标签都只存储在本地，不会自动推送到远程。所以，打错的标签可以在本地安全删除。
+
+如果要推送某个标签到远程，使用命令git push origin <tagname>：  
+	
+```
+$ git push origin v1.0
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:txd688/Git.git
+ * [new tag]         v1.0 -> v1.0
+
+#一次性全部推送tag
+git push origin --tags
+```
+
+如果标签已经推送到远程，要删除远程标签就麻烦一点，先从本地删除：
+```
+$ git tag -d v0.9
+Deleted tag 'v0.9' (was f52c633)
+
+$ git push origin :refs/tags/v0.9
+To github.com:michaelliao/learngit.git
+ - [deleted]         v0.9
 ```
