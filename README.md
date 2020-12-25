@@ -15,7 +15,7 @@
 [git remote add](#添加远程库和git-push)：关联一个远程库  
 [git clone](#从远程库克隆)：克隆一个本地仓库   
 [git switch -c \<name>](#创建与合并分支)：创建+切换分支或者git checkout -b <name>   
-[git branch <name>](#创建与合并分支)：创建分支  
+[git branch <name>](#创建与合并分支)：创建分支,查看分支  
 [git switch <name>](#创建与合并分支)：切换分支或者 git checkout <name>  
 [git merge <name>](#创建与合并分支)：合并分支    
 [git branch -d <name>](#创建与合并分支)：删除分支   
@@ -28,14 +28,14 @@
 [git push origin branch-name](#多人协作)：从本地推送分支  
 [git checkout -b branch-name origin/branch-name](#多人协作)：在本地创建和远程分支对应的分支  
 [git pull](#多人协作)：从远程抓取分支，如果有冲突，要先处理冲突。  
-[git branch --set-upstream branch-name origin/branch-name](#多人协作)：建立本地分支和远程分支的关联   
-[git rebase]：可以把本地未push的分叉提交历史整理成直线，目的是使得我们在查看历史提交的变化时更容易  
-[git tag <tagname>](#创建标签)：用于新建一个标签，默认为HEAD，也可以指定一个commit id	
-[git tag -a <tagname> -m "blablabla..."](#创建标签)：可以指定标签信息； 
-[git tag](#创建标签)：可以查看所有标签	
-[git show <tagname>](#创建标签)：查看标签信息  
-[git push origin <tagname>](#操作标签)：可以推送一个本地标签(git push origin --tags 可以推送全部未推送过的本地标签)	
-[git tag -d <tagname>](#操作标签)：可以删除一个本地标签  	
+[git branch --set-upstream branch-name origin/branch-name](#多人协作)：建立本地分支和远程分支的关联     
+[git rebase]：可以把本地未push的分叉提交历史整理成直线，目的是使得我们在查看历史提交的变化时更容易    
+[git tag <tagname>](#创建标签)：用于新建一个标签，默认为HEAD，也可以指定一个commit id	  
+[git tag -a <tagname> -m "blablabla..."](#创建标签)：可以指定标签信息；    
+[git tag](#创建标签)：可以查看所有标签	  
+[git show <tagname>](#创建标签)：查看标签信息     
+[git push origin <tagname>](#操作标签)：可以推送一个本地标签(git push origin --tags 可以推送全部未推送过的本地标签)	  
+[git tag -d <tagname>](#操作标签)：可以删除一个本地标签  	  
 [git push origin :refs/tags/<tagname>](#操作标签)：可以删除一个远程标签。  
 	
 ### 配置名字和邮箱
