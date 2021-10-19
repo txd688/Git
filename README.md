@@ -1,4 +1,8 @@
 # 一些常用的Git命令
+git branch -d ry 删除本地分支   
+git merge 2021-09-09/permission 本地合并分支  
+
+
 分布式版本控制系统
 [下载安装程序](https://git-scm.com/downloads)  
 
