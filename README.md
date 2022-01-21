@@ -2,8 +2,8 @@
 
 git branch -d ry 删除本地分支  
 git merge feature-2022-01-06/declare 本地合并分支（dev合并declare...）  
-git checkout -b feature-2022-01-06/declare 新建某个分支
-
+git checkout -b feature-2022-01-06/declare 新建某个分支  
+git commit -m 'vue 源码学习（初始化）' --no-verify 项目可能会设置提交消息指南，如果你的提交不符合要求，ghook会拒绝它。可以使用--no-verify跳过这个检查
 ## 使用规范
 
 ### 分支命名规范
